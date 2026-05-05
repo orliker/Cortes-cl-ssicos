@@ -3,30 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Barbearia Dom Cortês | Porto</title>
-  <meta name="description" content="Barbearia clássica no Porto desde 2018. Corte masculino, barba e prótese capilar. Marcar pelo WhatsApp.">
+  
+  <meta name="format-detection" content="telephone=no, date=no, email=no, address=no">
+  
+  <title>Dom Cortês | Barbearia Premium no Porto · Cortes e Prótese Capilar</title>
+  <meta name="description" content="A experiência definitiva de cuidado masculino no Porto. Especialistas em cortes de precisão e prótese capilar. Reserve o seu horário na Dom Cortês.">
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&family=Cinzel:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Lato:wght@300;400;700&family=Cinzel:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
     :root {
-      --bg:         #0c0c0c;
-      --bg2:        #111111;
-      --bg3:        #181818;
-      --card:       #1a1a1a;
+      --bg:         #050505;
+      --bg2:        #0a0a0a;
+      --bg3:        #0f0f0f;
       --gold:       #c9a96e;
       --gold-light: #e8d5a3;
-      --gold-dark:  #9a7a45;
-      --cream:      #f5efe0;
-      --text:       #e8e0d0;
-      --muted:      #7a7268;
-      --border:     rgba(201,169,110,0.15);
-      --ease:       cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --gold-dark:  #8a6d3b;
+      --gold-metallic: linear-gradient(135deg, #dfc288 0%, #9a7a45 50%, #dfc288 100%);
+      --text:       #dcd3c1;
+      --muted:      #888888;
+      --border:     rgba(201,169,110,0.12);
+      --border-bright: rgba(201,169,110,0.25);
+      --ease-premium: cubic-bezier(0.25, 1, 0.25, 1);
     }
 
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
 
     body {
@@ -34,1011 +39,481 @@
       background: var(--bg);
       color: var(--text);
       overflow-x: hidden;
-      line-height: 1.7;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
 
-    ::-webkit-scrollbar { width: 3px; }
+    a, a:link, a:visited, a:hover, a:active {
+      color: inherit;
+      text-decoration: none;
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body::before {
+      content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      opacity: 0.02; pointer-events: none; z-index: 9999;
+    }
+
+    ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: var(--bg); }
     ::-webkit-scrollbar-thumb { background: var(--gold-dark); }
-    ::selection { background: var(--gold-dark); color: var(--bg); }
+    ::selection { background: var(--gold-light); color: #000; }
 
-    img { display: block; max-width: 100%; }
+    img { display: block; max-width: 100%; height: auto; }
 
     /* ─── TYPOGRAPHY ─── */
-    h1, h2, h3 { font-family: 'Playfair Display', Georgia, serif; font-weight: 500; line-height: 1.15; }
+    h1, h2, h3 { font-family: 'Playfair Display', serif; font-weight: 500; line-height: 1.1; color: var(--gold-light); }
 
     .label {
       font-family: 'Cinzel', serif;
       font-size: 0.65rem;
-      letter-spacing: 0.28em;
+      letter-spacing: 0.4em;
       text-transform: uppercase;
       color: var(--gold);
-      display: block;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 1.5rem;
     }
+    .label::before { content: ""; width: 30px; height: 1px; background: var(--gold); }
+    .label.center { justify-content: center; }
+    .label.center::before, .label.center::after { content: ""; width: 30px; height: 1px; background: var(--gold); opacity: 0.6; }
 
-    /* ─── LAYOUT ─── */
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 2.5rem; }
-    section { padding: 7rem 0; }
+    /* Estilos para animação de texto tipo "Word Reveal" */
+    .word-reveal { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: 5px; }
+    .word-reveal span { display: inline-block; transform: translateY(110%); }
 
-    .gold-line { width: 44px; height: 1px; background: var(--gold); margin: 1.1rem 0; }
-    .gold-line.c { margin: 1.1rem auto; }
+    .container { max-width: 1300px; margin: 0 auto; padding: 0 3rem; }
+    section { padding: 10rem 0; position: relative; }
 
     /* ─── BUTTONS ─── */
     .btn {
-      display: inline-flex; align-items: center; gap: 0.6rem;
+      display: inline-flex; align-items: center; justify-content: center;
       font-family: 'Cinzel', serif;
-      font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
-      text-decoration: none; border-radius: 2px;
-      transition: all 0.28s var(--ease);
-      padding: 0.95rem 2rem;
+      font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; font-weight: 600;
+      padding: 1.2rem 3rem;
+      transition: all 0.5s var(--ease-premium);
+      border-radius: 2px;
+      border: none;
+      cursor: pointer;
     }
 
     .btn-gold {
-      background: var(--gold); color: var(--bg);
-      box-shadow: 0 4px 20px rgba(201,169,110,0.22);
+      background: var(--gold-metallic); color: #000 !important;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
-    .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(201,169,110,0.32); }
+    .btn-gold:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(201,169,110,0.25); filter: brightness(1.1); }
+    
+    .btn-outline { border: 1px solid var(--border-bright); color: var(--gold) !important; background: transparent; }
+    .btn-outline:hover { background: rgba(201,169,110,0.05); border-color: var(--gold); transform: translateY(-3px); }
 
-    .btn-outline { border: 1px solid rgba(232,213,163,0.3); color: var(--text); }
-    .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
-
-    /* ─── NAV ─── */
+    /* ─── NAVIGATION ─── */
     nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
-      padding: 1.5rem 2.5rem;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 2.5rem 4rem;
       display: flex; align-items: center; justify-content: space-between;
-      transition: all 0.4s var(--ease);
+      transition: all 0.6s var(--ease-premium);
     }
-    nav.up { background: rgba(12,12,12,0.96); padding: 1rem 2.5rem; border-bottom: 1px solid var(--border); backdrop-filter: blur(10px); }
-
-    .logo {
-      font-family: 'Cinzel', serif; font-size: 1rem; letter-spacing: 0.14em;
-      color: var(--gold); text-decoration: none;
-      display: flex; flex-direction: column; line-height: 1.1;
+    nav.scrolled {
+      padding: 1.2rem 4rem;
+      background: rgba(5,5,5,0.95);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid var(--border);
     }
-    .logo small { font-family: 'Lato', sans-serif; font-size: 0.55rem; letter-spacing: 0.3em; color: var(--muted); text-transform: uppercase; }
 
-    .nav-links { display: flex; align-items: center; gap: 2.2rem; list-style: none; }
-    .nav-links a { font-family: 'Lato', sans-serif; font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.3s; }
+    .logo-main { font-family: 'Cinzel', serif; font-size: 1.4rem; letter-spacing: 0.2em; color: var(--gold-light); font-weight: 700; }
+    .logo-sub { font-family: 'Lato', sans-serif; font-size: 0.5rem; letter-spacing: 0.5em; color: var(--muted); text-transform: uppercase; margin-top: 3px; }
+
+    .nav-links { display: flex; align-items: center; gap: 3rem; }
+    .nav-links a {
+      font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--muted);
+      transition: color 0.4s var(--ease-premium);
+    }
     .nav-links a:hover { color: var(--gold); }
-    .nav-links .nav-wa { border: 1px solid var(--gold); color: var(--gold) !important; padding: 0.45rem 1.1rem; font-size: 0.68rem !important; letter-spacing: 0.18em !important; border-radius: 2px; transition: background 0.28s, color 0.28s !important; }
-    .nav-links .nav-wa:hover { background: var(--gold); color: var(--bg) !important; }
 
-    .burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
-    .burger span { display: block; width: 22px; height: 1.5px; background: var(--gold); transition: all 0.3s; }
+    /* ─── HERO ─── */
+    #hero { height: 100vh; display: flex; align-items: center; justify-content: center; padding: 0; }
+    #hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.4) contrast(1.1); }
+    .hero-overlay { position: absolute; inset: 0; background: radial-gradient(circle at center, transparent 0%, rgba(5,5,5,0.85) 100%); }
 
-    .mob-nav {
-      display: none; position: fixed; inset: 0; z-index: 998;
-      background: rgba(10,10,10,0.97); backdrop-filter: blur(14px);
-      flex-direction: column; align-items: center; justify-content: center; gap: 2.2rem;
+    .hero-content { text-align: center; position: relative; z-index: 5; }
+    .hero-h1 { font-size: clamp(3.5rem, 8vw, 7rem); font-weight: 400; margin-bottom: 1.5rem; color: #fff; }
+    .hero-h1 em { font-family: 'Playfair Display', serif; font-style: italic; color: var(--gold); }
+
+    /* ─── IMAGE WRAPPER ─── */
+    .img-wrap { overflow: hidden; border-radius: 2px; border: 1px solid var(--border); position: relative; }
+    .img-wrap img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.85); }
+
+    /* ─── SECTIONS ─── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8rem; align-items: center; }
+
+    /* Sobre */
+    .sobre-stats { display: flex; gap: 4rem; margin-top: 4rem; border-top: 1px solid var(--border); padding-top: 3rem; }
+    .stat-item strong { display: block; font-size: 3rem; color: var(--gold); font-family: 'Playfair Display', serif; line-height: 1; margin-bottom: 0.5rem; }
+    .stat-item span { font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); }
+
+    /* Serviços */
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--border); border: 1px solid var(--border); }
+    .service-card {
+      background: var(--bg2); padding: 5rem 3rem;
+      transition: all 0.5s var(--ease-premium); position: relative;
     }
-    .mob-nav.open { display: flex; }
-    .mob-nav a { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--text); text-decoration: none; transition: color 0.3s; }
-    .mob-nav a:hover { color: var(--gold); }
+    .service-card:hover { background: var(--gold); transform: translateY(-10px); z-index: 2; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+    .service-card h3 { font-size: 1.8rem; margin-bottom: 1rem; transition: color 0.5s; }
+    .service-card p { font-size: 1rem; color: var(--muted); transition: color 0.5s; }
+    .service-card:hover h3, .service-card:hover p { color: #000; }
+    .service-icon { font-size: 2.5rem; margin-bottom: 2rem; display: block; filter: grayscale(1); transition: filter 0.5s; }
 
-    /* ─────────────────────────────────────────
-       VIDEO HERO — APPLE SCROLL EFFECT
-       ─────────────────────────────────────────
-       The wrapper is 350vh tall so the user scrolls
-       through it. The video is sticky at top:0 and
-       JS maps scrollProgress → video.currentTime.
-    ────────────────────────────────────────── */
-    #video-wrapper {
-      position: relative;
-      height: 160vh;   /* short and punchy — full video in ~60% viewport scroll */
+    /* Prótese */
+    #protese { background: var(--bg2); }
+    .protese-list { list-style: none; margin: 2.5rem 0; }
+    .protese-list li { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; font-size: 1.05rem; color: var(--text); }
+    .protese-list li::before { content: "◈"; color: var(--gold); }
+
+    /* Galeria */
+    .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+    .gal-item { aspect-ratio: 4/5; position: relative; overflow: hidden; border: 1px solid var(--border); }
+    .gal-item img { transition: transform 1s var(--ease-premium); width: 100%; height: 100%; object-fit: cover; }
+    .gal-item:hover img { transform: scale(1.08); filter: brightness(1); }
+    .gal-overlay {
+      position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      opacity: 0; transition: opacity 0.4s var(--ease-premium); display: flex; align-items: flex-end; padding: 1.5rem;
     }
+    .gal-item:hover .gal-overlay { opacity: 1; }
+    .gal-overlay span { font-family: 'Cinzel', serif; color: var(--gold); font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; transform: translateY(10px); transition: transform 0.4s; }
+    .gal-item:hover .gal-overlay span { transform: translateY(0); }
 
-    #video-sticky {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+    /* Contacto / Localização */
+    .map-container { width: 100%; height: 400px; border: 1px solid var(--border); }
+    .map-container iframe { width: 100%; height: 100%; filter: grayscale(100%) invert(90%) contrast(80%) hue-rotate(180deg); }
 
-    #hero-video {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-    }
+    /* Footer */
+    footer { background: #020202; padding: 6rem 0 3rem; border-top: 1px solid var(--border); }
+    .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 5rem; margin-bottom: 4rem; }
+    .footer-col h4 { font-family: 'Cinzel', serif; font-size: 0.7rem; color: var(--gold); margin-bottom: 1.5rem; letter-spacing: 0.2em; text-transform: uppercase; }
+    .footer-links { list-style: none; }
+    .footer-links li { margin-bottom: 0.8rem; }
+    .footer-links a { color: var(--muted); font-size: 0.9rem; transition: color 0.3s; }
+    .footer-links a:hover { color: var(--gold); }
+    .copyright { text-align: center; color: var(--muted); font-size: 0.8rem; border-top: 1px solid var(--border); padding-top: 2rem; }
 
-    /* Dark overlay on video */
-    .video-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        135deg,
-        rgba(12,12,12,0.78) 0%,
-        rgba(12,12,12,0.45) 60%,
-        rgba(12,12,12,0.65) 100%
-      );
-      z-index: 1;
-    }
-
-    /* Fallback bg when no video */
-    .video-fallback {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, #0c0c0c 0%, #1a140a 55%, #0c0c0c 100%);
-      z-index: 0;
-    }
-    .video-fallback::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 80% 90% at 60% 50%, rgba(201,169,110,0.07) 0%, transparent 65%);
-    }
-
-    /* Hero text sits over the video */
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 1200px;
-      width: 100%;
-      margin: 0 auto;
-      padding: 0 2.5rem;
-      padding-top: 90px;
-    }
-
-    .hero-eye {
-      display: flex; align-items: center; gap: 1rem;
-      margin-bottom: 2rem;
-      opacity: 0; transform: translateY(18px);
-      animation: fu 0.9s 0.15s var(--ease) forwards;
-    }
-    .hero-eye::before { content: ''; display: block; width: 36px; height: 1px; background: var(--gold); }
-
-    .hero-h1 {
-      font-size: clamp(2.8rem, 5.5vw, 5rem);
-      color: var(--cream);
-      opacity: 0; transform: translateY(22px);
-      animation: fu 0.9s 0.3s var(--ease) forwards;
-    }
-    .hero-h1 em { font-style: italic; color: var(--gold-light); }
-
-    .hero-sub {
-      font-size: clamp(1rem, 1.8vw, 1.2rem);
-      color: var(--muted); font-weight: 300; max-width: 480px;
-      margin: 1.4rem 0 2.5rem;
-      opacity: 0; transform: translateY(22px);
-      animation: fu 0.9s 0.45s var(--ease) forwards;
-    }
-
-    .hero-btns {
-      display: flex; gap: 1rem; flex-wrap: wrap;
-      opacity: 0; transform: translateY(20px);
-      animation: fu 0.9s 0.6s var(--ease) forwards;
-    }
-
-    .hero-badges {
-      display: flex; gap: 2.5rem; flex-wrap: wrap;
-      margin-top: 3.5rem;
-      opacity: 0; transform: translateY(18px);
-      animation: fu 0.9s 0.75s var(--ease) forwards;
-    }
-    .badge-item { display: flex; flex-direction: column; }
-    .badge-item strong { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--gold-light); font-weight: 400; }
-    .badge-item small { font-size: 0.68rem; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; }
-
-    /* Scroll hint at bottom of video */
-    .scroll-hint {
-      position: absolute;
-      bottom: 2.5rem; left: 50%; transform: translateX(-50%);
-      z-index: 3;
-      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-      opacity: 0;
-      animation: fu 1s 1.2s ease forwards;
-    }
-    .scroll-hint span { font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.3em; color: var(--muted); text-transform: uppercase; }
-    .scroll-dot {
-      width: 1px; height: 50px;
-      background: linear-gradient(to bottom, var(--gold), transparent);
-      animation: scrollLine 1.8s ease-in-out infinite;
-    }
-
-    /* Video progress bar */
-    #vid-progress {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 2px;
-      background: rgba(201,169,110,0.15);
-      z-index: 4;
-    }
-    #vid-progress-bar {
-      height: 100%;
-      background: var(--gold);
-      width: 0%;
-      transition: width 0.05s linear;
-    }
-
-    /* Video not loaded notice */
-    #vid-notice {
-      position: absolute;
-      top: 1.5rem; right: 2rem;
-      z-index: 10;
-      background: rgba(201,169,110,0.12);
-      border: 1px solid var(--border);
-      padding: 0.6rem 1rem;
-      font-family: 'Cinzel', serif;
-      font-size: 0.6rem;
-      letter-spacing: 0.15em;
-      color: var(--gold);
-      border-radius: 2px;
-      backdrop-filter: blur(8px);
-      display: none;
-    }
-    #vid-notice.show { display: block; }
-
-    /* ─── HERO GRADIENT BOTTOM ─── */
-    .hero-grad { position: absolute; bottom: 0; left: 0; right: 0; height: 130px; background: linear-gradient(to bottom, transparent, var(--bg)); z-index: 3; }
-
-    @keyframes fu { to { opacity: 1; transform: translateY(0); } }
-    @keyframes scrollLine { 0%,100% { transform: scaleY(0); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } }
-
-    /* ─── SOBRE ─── */
-    #sobre { background: var(--bg2); }
-    .sobre-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
-
-    .sobre-img-wrap { position: relative; }
-    .sobre-frame { position: absolute; top: -14px; left: -14px; right: 14px; bottom: -14px; border: 1px solid var(--border); border-radius: 2px; pointer-events: none; }
-    .sobre-ph {
-      aspect-ratio: 4/5;
-      background: var(--card);
-      border: 1px solid var(--border);
-      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem;
-      position: relative; overflow: hidden;
-    }
-    .sobre-ph::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 0%, rgba(201,169,110,0.07) 0%, transparent 55%); }
-    .sobre-ph-icon { font-size: 3rem; opacity: 0.15; }
-    .sobre-ph-txt { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.2em; color: var(--gold); opacity: 0.5; text-align: center; }
-
-    .sobre-text h2 { font-size: clamp(1.9rem, 3vw, 2.7rem); color: var(--cream); margin-bottom: 1.4rem; }
-    .sobre-text p { color: var(--muted); font-weight: 300; font-size: 0.95rem; line-height: 1.9; margin-bottom: 1.1rem; }
-    .sobre-text p strong { color: var(--text); font-weight: 400; }
-
-    .sobre-stats { display: flex; gap: 2.5rem; margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border); }
-    .st-num { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--gold); font-weight: 400; line-height: 1; display: block; }
-    .st-lbl { font-size: 0.68rem; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; margin-top: 0.3rem; display: block; }
-
-    /* ─── SERVICES ─── */
-    #servicos { background: var(--bg); }
-    .sec-hd { text-align: center; margin-bottom: 4rem; }
-    .sec-hd h2 { font-size: clamp(1.9rem, 3.5vw, 2.8rem); color: var(--cream); }
-    .sec-hd p { max-width: 460px; margin: 0.9rem auto 0; color: var(--muted); font-weight: 300; font-size: 0.93rem; }
-
-    .svcs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px; background: var(--border); border: 1px solid var(--border); }
-    .svc {
-      background: var(--bg); padding: 2.8rem 2.2rem;
-      position: relative; overflow: hidden;
-      transition: background 0.3s;
-    }
-    .svc::before { content: ''; position: absolute; top: 0; left: 0; width: 0; height: 2px; background: var(--gold); transition: width 0.4s var(--ease); }
-    .svc:hover { background: var(--bg3); }
-    .svc:hover::before { width: 100%; }
-    .svc-icon { font-size: 1.8rem; margin-bottom: 1.2rem; opacity: 0.6; }
-    .svc-name { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--cream); margin-bottom: 0.5rem; }
-    .svc-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.8; font-weight: 300; }
-    .svc-note { margin-top: 1.1rem; font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.1em; color: var(--gold-dark); }
-
-    /* ─── PRÓTESE ─── */
-    #protese { background: var(--bg2); position: relative; overflow: hidden; }
-    #protese::before { content: ''; position: absolute; top: 0; right: 0; width: 500px; height: 500px; background: radial-gradient(ellipse at 100% 0%, rgba(201,169,110,0.07) 0%, transparent 60%); pointer-events: none; }
-
-    .prot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
-    .prot-text h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--cream); margin-bottom: 1.4rem; }
-    .prot-text p { color: var(--muted); font-weight: 300; font-size: 0.95rem; line-height: 1.9; margin-bottom: 1.1rem; }
-    .prot-feats { display: flex; flex-direction: column; gap: 0.8rem; margin: 1.8rem 0; }
-    .prot-feat { display: flex; gap: 0.9rem; align-items: flex-start; }
-    .prot-feat::before { content: '—'; color: var(--gold); flex-shrink: 0; }
-    .prot-feat span { font-size: 0.9rem; color: var(--text); font-weight: 300; }
-
-    .prot-img-wrap { position: relative; }
-    .prot-badge { position: absolute; top: -1px; right: -1px; background: var(--gold); color: var(--bg); font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.45rem 0.9rem; z-index: 2; }
-    .prot-ph { aspect-ratio: 3/4; background: var(--card); border: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; position: relative; overflow: hidden; }
-    .prot-ph::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 100%, rgba(201,169,110,0.07) 0%, transparent 55%); }
-
-    /* ─── GALLERY ─── */
-    #galeria { background: var(--bg); }
-
-    .gallery-masonry {
-      columns: 3;
-      column-gap: 6px;
-      margin-top: 3rem;
-    }
-
-    .gal-photo {
-      break-inside: avoid;
-      margin-bottom: 6px;
-      position: relative;
-      overflow: hidden;
-      background: var(--card);
-      border: 1px solid var(--border);
-    }
-
-    .gal-photo img {
-      width: 100%;
-      height: auto;
-      display: block;
-      transition: transform 0.5s var(--ease), opacity 0.3s;
-      opacity: 0.92;
-    }
-    .gal-photo:hover img { transform: scale(1.04); opacity: 1; }
-
-    .gal-photo .gal-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(12,12,12,0.6) 0%, transparent 50%);
-      opacity: 0;
-      transition: opacity 0.35s;
-      display: flex;
-      align-items: flex-end;
-      padding: 1rem;
-    }
-    .gal-photo:hover .gal-overlay { opacity: 1; }
-    .gal-overlay-text { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.18em; color: var(--gold); text-transform: uppercase; }
-
-    .gal-cta { text-align: center; margin-top: 2.5rem; }
-    .gal-cta a { font-family: 'Cinzel', serif; font-size: 0.68rem; letter-spacing: 0.2em; color: var(--gold); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.3s; padding-bottom: 2px; text-transform: uppercase; }
-    .gal-cta a:hover { border-color: var(--gold); }
-
-    /* ─── COMO MARCAR ─── */
-    #marcar { background: var(--bg2); }
-    .marcar-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
-
-    .steps { display: flex; flex-direction: column; }
-    .step { display: flex; gap: 1.8rem; padding: 1.9rem 0; border-bottom: 1px solid var(--border); }
-    .step:last-child { border-bottom: none; }
-    .step-n { font-family: 'Playfair Display', serif; font-size: 2.4rem; color: var(--border); flex-shrink: 0; width: 2rem; line-height: 1; transition: color 0.3s; }
-    .step:hover .step-n { color: var(--gold-dark); }
-    .step h3 { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--cream); margin-bottom: 0.4rem; }
-    .step p { font-size: 0.85rem; color: var(--muted); font-weight: 300; }
-
-    .marcar-box {
-      background: var(--card); border: 1px solid var(--border); padding: 3rem;
-      text-align: center; position: relative; overflow: hidden;
-    }
-    .marcar-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent, var(--gold), transparent); }
-    .marcar-box h3 { font-size: 1.4rem; color: var(--cream); margin-bottom: 0.7rem; }
-    .marcar-box p { font-size: 0.85rem; color: var(--muted); font-weight: 300; margin-bottom: 1.8rem; line-height: 1.7; }
-    .wa-num { display: block; font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--gold-light); margin-bottom: 1.8rem; }
-
-    /* ─── LOCATION ─── */
-    #localizacao { background: var(--bg); }
-    .loc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
-    .loc-info h2 { font-size: clamp(1.8rem, 2.5vw, 2.4rem); color: var(--cream); margin-bottom: 2rem; }
-
-    .loc-items { display: flex; flex-direction: column; gap: 1.4rem; margin-bottom: 2.5rem; }
-    .loc-item { display: flex; gap: 1rem; align-items: flex-start; }
-    .loc-ic { width: 36px; height: 36px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--gold); font-size: 0.9rem; flex-shrink: 0; }
-    .loc-d strong { display: block; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.2rem; }
-    .loc-d a, .loc-d span { font-size: 0.9rem; color: var(--text); text-decoration: none; transition: color 0.3s; }
-    .loc-d a:hover { color: var(--gold); }
-
-    .loc-map { height: 370px; background: var(--card); border: 1px solid var(--border); overflow: hidden; position: relative; }
-    .loc-map iframe { width: 100%; height: 100%; border: none; filter: grayscale(100%) brightness(0.7) contrast(1.1); }
-    .map-ph { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; }
-    .map-ph-pin { font-size: 2.5rem; opacity: 0.35; }
-    .map-ph-txt { font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.2em; color: var(--gold); opacity: 0.65; text-align: center; }
-
-    .loc-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
-
-    /* ─── CONFIANÇA ─── */
-    #confianca { background: var(--bg2); }
-    .pil-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); margin: 3.5rem 0; }
-    .pil { background: var(--bg2); padding: 2.4rem 1.8rem; text-align: center; transition: background 0.3s; }
-    .pil:hover { background: var(--bg3); }
-    .pil-ic { font-size: 1.8rem; margin-bottom: 0.9rem; display: block; }
-    .pil-t { font-family: 'Playfair Display', serif; font-size: 0.95rem; color: var(--cream); margin-bottom: 0.4rem; }
-    .pil-d { font-size: 0.8rem; color: var(--muted); font-weight: 300; line-height: 1.7; }
-
-    .since-box {
-      text-align: center; padding: 2.5rem;
-      border: 1px solid var(--border); max-width: 420px; margin: 0 auto; position: relative;
-    }
-    .since-box::before, .since-box::after { content: '✦'; position: absolute; top: 50%; transform: translateY(-50%); color: var(--gold-dark); font-size: 0.55rem; opacity: 0.45; }
-    .since-box::before { left: 1rem; }
-    .since-box::after { right: 1rem; }
-    .since-yr { font-family: 'Playfair Display', serif; font-size: 4.5rem; color: var(--gold); opacity: 0.22; font-weight: 400; line-height: 1; display: block; }
-    .since-txt { font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.22em; color: var(--muted); text-transform: uppercase; }
-
-    /* ─── CTA FINAL ─── */
-    #cta-final { background: var(--bg); position: relative; overflow: hidden; }
-    #cta-final::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 90% at 50% 50%, rgba(201,169,110,0.045) 0%, transparent 65%); }
-    .cta-c { text-align: center; position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
-    .cta-orn { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--gold); opacity: 0.35; letter-spacing: 0.5em; margin-bottom: 1.8rem; display: block; }
-    .cta-c h2 { font-size: clamp(2rem, 4vw, 3.2rem); color: var(--cream); margin-bottom: 1.4rem; }
-    .cta-c p { font-size: 1rem; color: var(--muted); font-weight: 300; line-height: 1.85; margin-bottom: 2.5rem; }
-    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-
-    /* ─── FOOTER ─── */
-    footer { background: #080808; border-top: 1px solid var(--border); padding: 3rem 0; }
-    .ft { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 3rem; }
-    .ft-brand p { font-size: 0.82rem; color: var(--muted); font-weight: 300; line-height: 1.8; margin-top: 0.8rem; }
-    .ft-col h4 { font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.2em; color: var(--gold); margin-bottom: 1.2rem; text-transform: uppercase; }
-    .ft-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
-    .ft-col ul a { font-size: 0.83rem; color: var(--muted); text-decoration: none; transition: color 0.3s; font-weight: 300; }
-    .ft-col ul a:hover { color: var(--gold); }
-    .ft-social { display: flex; gap: 0.8rem; margin-top: 1.1rem; }
-    .ft-soc { width: 34px; height: 34px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--muted); text-decoration: none; font-size: 0.8rem; transition: all 0.3s; }
-    .ft-soc:hover { border-color: var(--gold); color: var(--gold); }
-    .ft-btm { text-align: center; margin-top: 2.5rem; padding-top: 1.8rem; border-top: 1px solid var(--border); font-size: 0.72rem; color: var(--muted); letter-spacing: 0.05em; }
-
-    /* ─── FLOATING WA ─── */
-    .wa-fab {
-      position: fixed; bottom: 2rem; right: 2rem; z-index: 997;
-      width: 54px; height: 54px; background: #25d366; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 4px 18px rgba(37,211,102,0.3); text-decoration: none;
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-    .wa-fab:hover { transform: scale(1.1); box-shadow: 0 8px 28px rgba(37,211,102,0.42); }
-    .wa-fab svg { width: 27px; height: 27px; fill: white; }
-
-    /* ─── REVEAL ANIMATION ─── */
-    .r { opacity: 0; transform: translateY(28px); transition: opacity 0.72s var(--ease), transform 0.72s var(--ease); }
-    .r.v { opacity: 1; transform: none; }
-    .r1 { transition-delay: 0.1s; }
-    .r2 { transition-delay: 0.2s; }
-    .r3 { transition-delay: 0.3s; }
-    .r4 { transition-delay: 0.4s; }
-    .r5 { transition-delay: 0.5s; }
-
-    /* ─── RESPONSIVE ─── */
+    /* Responsive */
     @media (max-width: 1024px) {
-      .pil-grid { grid-template-columns: repeat(3, 1fr); }
-    }
-    @media (max-width: 900px) {
-      nav { padding: 1.2rem 1.5rem; }
-      nav.up { padding: 0.9rem 1.5rem; }
+      .grid-2 { grid-template-columns: 1fr; gap: 4rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr; gap: 3rem; }
+      nav { padding: 1.5rem 2rem; }
       .nav-links { display: none; }
-      .burger { display: flex; }
-      .hero-content { padding: 0 1.5rem; padding-top: 85px; }
-      section { padding: 5rem 0; }
-      .container { padding: 0 1.5rem; }
-      .sobre-grid, .prot-grid, .marcar-grid, .loc-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-      .sobre-frame { display: none; }
-      .gallery-masonry { columns: 2; }
-      .svcs { grid-template-columns: 1fr 1fr; }
-      .pil-grid { grid-template-columns: 1fr 1fr; }
-      .ft { grid-template-columns: 1fr; gap: 2rem; }
-    }
-    @media (max-width: 600px) {
-      .hero-btns { flex-direction: column; }
-      .hero-badges { gap: 1.5rem; }
-      .sobre-stats { flex-wrap: wrap; gap: 1.5rem; }
-      .gallery-masonry { columns: 1; }
-      .svcs { grid-template-columns: 1fr; }
-      .pil-grid { grid-template-columns: 1fr; }
-      .cta-btns { flex-direction: column; }
-      .loc-btns { flex-direction: column; }
-      #video-wrapper { height: 150vh; }
+      .container { padding: 0 2rem; }
+      .hero-h1 { font-size: 4rem; }
     }
   </style>
 </head>
 <body>
 
-<!-- ══ NAV ══════════════════════════════════════════════ -->
-<nav id="nav">
-  <a href="#" class="logo">Dom Cortês <small>Barbearia · Porto</small></a>
-  <ul class="nav-links">
-    <li><a href="#sobre">Sobre nós</a></li>
-    <li><a href="#servicos">Serviços</a></li>
-    <li><a href="#protese">Prótese Capilar</a></li>
-    <li><a href="#galeria">Galeria</a></li>
-    <li><a href="#localizacao">Localização</a></li>
-    <li><a href="https://wa.me/351916741779?text=Ol%C3%A1%2C%20Dom%20Cort%C3%AAs%21%20Gostaria%20de%20marcar%20um%20hor%C3%A1rio." target="_blank" class="nav-wa">Marcar</a></li>
-  </ul>
-  <div class="burger" onclick="toggleMob()"><span></span><span></span><span></span></div>
-</nav>
+  <nav id="navbar">
+    <a href="#" class="logo">
+      <div class="logo-main">DOM CORTÊS</div>
+      <div class="logo-sub">Barbearia · Porto</div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#sobre">A Barbearia</a></li>
+      <li><a href="#servicos">Serviços</a></li>
+      <li><a href="#protese">Prótese Capilar</a></li>
+      <li><a href="#galeria">Galeria</a></li>
+      <li><a href="https://wa.me/351916741779" target="_blank" class="btn-outline" style="padding: 0.6rem 1.5rem; border-radius: 2px;">Reservar</a></li>
+    </ul>
+  </nav>
 
-<div class="mob-nav" id="mobNav">
-  <a href="#sobre" onclick="toggleMob()">Sobre nós</a>
-  <a href="#servicos" onclick="toggleMob()">Serviços</a>
-  <a href="#protese" onclick="toggleMob()">Prótese Capilar</a>
-  <a href="#galeria" onclick="toggleMob()">Galeria</a>
-  <a href="#localizacao" onclick="toggleMob()">Localização</a>
-  <a href="https://wa.me/351916741779?text=Ol%C3%A1%2C%20Dom%20Cort%C3%AAs%21%20Gostaria%20de%20marcar%20um%20hor%C3%A1rio." target="_blank" style="color:var(--gold);">Marcar pelo WhatsApp</a>
-</div>
-
-<!-- ══ HERO — VIDEO SCROLL ═══════════════════════════════
-     • Coloca o vídeo da tua web em: assets/hero.mp4
-     • O vídeo avança frame a frame com o scroll
-     • Enquanto o vídeo não estiver, aparece fundo elegante
-══════════════════════════════════════════════════════════ -->
-<div id="video-wrapper">
-  <div id="video-sticky">
-
-    <!-- FALLBACK background (mostra sempre até o vídeo carregar) -->
-    <div class="video-fallback" id="vidFallback"></div>
-
-    <!-- Aviso quando vídeo não está presente -->
-    <div id="vid-notice">▶ Adiciona assets/hero.mp4 para ativar o efeito de scroll</div>
-
-    <!-- VÍDEO HERO (paused — controlado por scroll) -->
-    <video id="hero-video"
-           src="assets/hero.mp4"
-           muted
-           playsinline
-           preload="auto"
-           webkit-playsinline>
+  <section id="hero">
+    <video id="hero-video" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=1920&q=80">
+      <source src="assets/hero.mp4" type="video/mp4">
     </video>
-
-    <div class="video-overlay"></div>
-
-    <!-- Conteúdo hero -->
-    <div class="hero-content">
-      <div class="hero-eye">
-        <span class="label" style="margin:0">Barbearia Dom Cortês &ensp;·&ensp; Porto, desde 2018</span>
-      </div>
-
+    <div class="hero-overlay"></div>
+    <div class="hero-content anime-section">
+      <span class="label center anime-fade">Desde 2018 no Porto</span>
       <h1 class="hero-h1">
-        Cortes clássicos.<br>
-        <em>Cuidado com detalhe.</em>
+        <span class="word-reveal"><span>Onde</span></span>
+        <span class="word-reveal"><span>a</span></span>
+        <span class="word-reveal"><span>tradição</span></span><br>
+        <span class="word-reveal"><span>encontra</span></span>
+        <span class="word-reveal"><span>o</span></span>
+        <span class="word-reveal"><span><em>Estilo</em>.</span></span>
       </h1>
-
-      <p class="hero-sub">
-        Barbearia de referência no Porto para homens que valorizam presença, estilo e confiança.
-      </p>
-
-      <div class="hero-btns">
-        <a href="https://wa.me/351916741779?text=Ol%C3%A1%2C%20Dom%20Cort%C3%AAs%21%20Gostaria%20de%20marcar%20um%20hor%C3%A1rio."
-           target="_blank" class="btn btn-gold">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-          Marcar pelo WhatsApp
-        </a>
-        <a href="#servicos" class="btn btn-outline">Ver serviços</a>
+      <div class="anime-fade" style="margin-top: 3rem;">
+        <a href="https://wa.me/351916741779" target="_blank" class="btn btn-gold">Marcar Horário</a>
       </div>
-
-      <div class="hero-badges">
-        <div class="badge-item"><strong>Desde 2018</strong><small>No Porto</small></div>
-        <div class="badge-item"><strong>R. João Pedro Ribeiro 806</strong><small>4000-302 Porto</small></div>
-        <div class="badge-item"><strong>Corte · Barba · Prótese</strong><small>Serviços especializados</small></div>
-      </div>
-    </div><!-- /hero-content -->
-
-    <!-- Scroll hint -->
-    <div class="scroll-hint">
-      <span>Scroll</span>
-      <div class="scroll-dot"></div>
     </div>
+  </section>
 
-    <!-- Video progress bar -->
-    <div id="vid-progress"><div id="vid-progress-bar"></div></div>
-
-    <!-- Gradient bottom -->
-    <div class="hero-grad"></div>
-
-  </div><!-- /video-sticky -->
-</div><!-- /video-wrapper -->
-
-
-<!-- ══ SOBRE ══════════════════════════════════════════════ -->
-<section id="sobre">
-  <div class="container">
-    <div class="sobre-grid">
-
-      <div class="sobre-img-wrap r">
-        <div class="sobre-frame"></div>
-        <div class="sobre-ph">
-          <div class="sobre-ph-icon">✂</div>
-          <div class="sobre-ph-txt">Foto do local / equipa<br><small style="opacity:.5;font-size:.55rem">Substituir por foto real</small></div>
+  <section id="sobre" class="anime-section">
+    <div class="container">
+      <div class="grid-2">
+        <div class="img-wrap anime-img-container" style="aspect-ratio: 4/5;">
+          <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=800&q=90" alt="Interior da Barbearia Dom Cortês" class="anime-img">
         </div>
-      </div>
-
-      <div class="sobre-text">
-        <span class="label r">Sobre nós</span>
-        <div class="gold-line r r1"></div>
-        <h2 class="r r1">Uma barbearia com <em>história</em> e identidade própria</h2>
-        <p class="r r2">A <strong>Barbearia Dom Cortês</strong> nasceu em 2018 com uma missão clara: oferecer ao homem portuense um espaço de cuidado masculino a sério. Num ambiente clássico e acolhedor, onde a técnica encontra o detalhe.</p>
-        <p class="r r2">Com raízes brasileiras e alma portuguesa, a Dom Cortês conquistou o seu lugar como uma das barbearias de referência no Porto — reconhecida pela qualidade do serviço, pelos profissionais qualificados e por um atendimento genuinamente personalizado.</p>
-        <p class="r r3">Mais do que um corte, oferecemos uma experiência. Porque <strong>a autoestima de um homem também se cuida.</strong></p>
-        <div class="sobre-stats r r3">
-          <div><span class="st-num">2018</span><span class="st-lbl">Fundação</span></div>
-          <div><span class="st-num">Porto</span><span class="st-lbl">Cidade</span></div>
-          <div><span class="st-num">152+</span><span class="st-lbl">Posts publicados</span></div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
-<!-- ══ SERVIÇOS ═══════════════════════════════════════════ -->
-<section id="servicos">
-  <div class="container">
-    <div class="sec-hd">
-      <span class="label r">Os nossos serviços</span>
-      <h2 class="r r1">Tudo o que o homem moderno precisa</h2>
-      <div class="gold-line c r r2"></div>
-      <p class="r r2">Serviços realizados por profissionais qualificados, com atenção a cada detalhe.</p>
-    </div>
-    <div class="svcs">
-      <div class="svc r"><div class="svc-icon">✂</div><div class="svc-name">Corte Masculino</div><div class="svc-desc">Corte clássico ou moderno, adaptado ao teu estilo, forma do rosto e preferência pessoal.</div><div class="svc-note">Marcação pelo WhatsApp</div></div>
-      <div class="svc r r1"><div class="svc-icon">🪒</div><div class="svc-name">Barba</div><div class="svc-desc">Tratamento de barba com navalha, toalha quente e produtos de qualidade.</div><div class="svc-note">Marcação pelo WhatsApp</div></div>
-      <div class="svc r r2"><div class="svc-icon">💈</div><div class="svc-name">Corte + Barba</div><div class="svc-desc">O pack completo — o serviço mais procurado na Dom Cortês.</div><div class="svc-note">Marcação pelo WhatsApp</div></div>
-      <div class="svc r r1"><div class="svc-icon">◟</div><div class="svc-name">Sobrancelha</div><div class="svc-desc">Design e tratamento de sobrancelha masculina. Detalhe que faz a diferença.</div><div class="svc-note">Marcação pelo WhatsApp</div></div>
-      <div class="svc r r2"><div class="svc-icon">👑</div><div class="svc-name">Prótese Capilar</div><div class="svc-desc">Solução natural e discreta para recuperar densidade, confiança e estilo.</div><div class="svc-note">Consulta prévia · WhatsApp</div></div>
-      <div class="svc r r3"><div class="svc-icon">◈</div><div class="svc-name">Consultoria de Imagem</div><div class="svc-desc">Orientação personalizada sobre corte, barba e imagem para o teu estilo de vida.</div><div class="svc-note">Serviço personalizado</div></div>
-    </div>
-    <div style="text-align:center;margin-top:3rem" class="r">
-      <a href="https://wa.me/351916741779?text=Ol%C3%A1%2C%20Dom%20Cort%C3%AAs%21%20Gostaria%20de%20marcar%20um%20hor%C3%A1rio." target="_blank" class="btn btn-gold">Marcar pelo WhatsApp</a>
-    </div>
-  </div>
-</section>
-
-
-<!-- ══ PRÓTESE CAPILAR ════════════════════════════════════ -->
-<section id="protese">
-  <div class="container">
-    <div class="prot-grid">
-      <div class="prot-text">
-        <span class="label r">Especialidade</span>
-        <div class="gold-line r r1"></div>
-        <h2 class="r r1">Prótese Capilar<br><em>Confiança que se vê</em></h2>
-        <p class="r r2">A prótese capilar é uma das especialidades da Dom Cortês — uma solução discreta, personalizada e de alto impacto para homens que procuram recuperar densidade capilar com um resultado completamente natural.</p>
-        <p class="r r2">Trabalhamos com materiais de qualidade, técnicos experientes e um processo totalmente adaptado ao perfil de cada cliente.</p>
-        <div class="prot-feats r r3">
-          <div class="prot-feat"><span>Resultado natural e personalizado</span></div>
-          <div class="prot-feat"><span>Profissionais especializados</span></div>
-          <div class="prot-feat"><span>Materiais de alta qualidade</span></div>
-          <div class="prot-feat"><span>Manutenção e acompanhamento contínuo</span></div>
-          <div class="prot-feat"><span>Consulta prévia sem compromisso</span></div>
-        </div>
-        <div style="margin-top:2rem" class="r r4">
-          <a href="https://wa.me/351916741779?text=Ol%C3%A1%2C%20Dom%20Cort%C3%AAs%21%20Gostaria%20de%20saber%20mais%20sobre%20a%20pr%C3%B3tese%20capilar." target="_blank" class="btn btn-gold">Falar sobre prótese capilar</a>
-        </div>
-      </div>
-      <div class="prot-img-wrap r r2">
-        <div class="prot-badge">Especialidade</div>
-        <div class="prot-ph">
-          <div class="sobre-ph-icon" style="font-size:2.5rem;opacity:.15;">◉</div>
-          <div class="sobre-ph-txt">Foto prótese capilar<br><small style="opacity:.5;font-size:.55rem">Substituir por foto real</small></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ══ GALERIA — FOTOS REAIS DO INSTAGRAM ════════════════
-     Imagens reais de @domcortesoficial (Instagram CDN)
-     NOTA: URLs do Instagram expiram após algumas horas.
-     Para produção, descarrega as imagens e coloca em assets/
-════════════════════════════════════════════════════════ -->
-<section id="galeria">
-  <div class="container">
-    <div class="sec-hd">
-      <span class="label r">Trabalhos reais</span>
-      <h2 class="r r1">Galeria Dom Cortês</h2>
-      <div class="gold-line c r r2"></div>
-      <p class="r r2">Cada corte conta uma história. Fotos reais de <a href="https://www.instagram.com/domcortesoficial/" target="_blank" style="color:var(--gold);text-decoration:none;">@domcortesoficial</a></p>
-    </div>
-
-    <div class="gallery-masonry r">
-
-      <div class="gal-photo">
-        <img src="https://instagram.fopo5-2.fna.fbcdn.net/v/t51.71878-15/504008602_1876076436575509_9155154971849836387_n.jpg?stp=dst-jpg_e15_fr_p1080x1080_tt6&_nc_ht=instagram.fopo5-2.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2gERyzOsRWuQjxwnLeJZ7oLnG49Fcz1IA8-1c2iQij3uOu-feIaNd4eMLuuAl9lsUmZCYqjtpgkFDl9JUN5h5s7J&_nc_ohc=DRiO0Gt9zSkQ7kNvwHRSDOp&_nc_gid=zmIcji9zSuwt7IcYUljLcQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Af5qDwqYAfaQ2gLHioJd2aOnwmA_n19AHIRFXCFYPYCHnA&oe=69FA342C&_nc_sid=8b3546"
-             alt="Corte Dom Cortês" loading="lazy" onerror="this.parentElement.style.display='none'">
-        <div class="gal-overlay"><span class="gal-overlay-text">Corte</span></div>
-      </div>
-
-      <div class="gal-photo">
-        <img src="https://instagram.fopo5-2.fna.fbcdn.net/v/t51.71878-15/572505162_2089017888300597_4700612990358898191_n.jpg?stp=dst-jpg_e15_tt6&_nc_ht=instagram.fopo5-2.fna.fbcdn.net&_nc_cat=109&_nc_oc=Q6cZ2gERyzOsRWuQjxwnLeJZ7oLnG49Fcz1IA8-1c2iQij3uOu-feIaNd4eMLuuAl9lsUmZCYqjtpgkFDl9JUN5h5s7J&_nc_ohc=_uQdBBsx4EYQ7kNvwGvw5Oq&_nc_gid=zmIcji9zSuwt7IcYUljLcQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Af4DLmgXyZbHLnjh3NS601Uu4PdzkhjbKK7DMdlG5Sgidw&oe=69FA19CA&_nc_sid=8b3546"
-             alt="Dom Cortês" loading="lazy" onerror="this.parentElement.style.display='none'">
-        <div class="gal-overlay"><span class="gal-overlay-text">Trabalho</span></div>
-      </div>
-
-      <div class="gal-photo">
-        <img src="https://instagram.fopo5-1.fna.fbcdn.net/v/t51.71878-15/573347173_809822301926392_7218882752533234887_n.jpg?stp=dst-jpg_e15_tt6&_nc_ht=instagram.fopo5-1.fna.fbcdn.net&_nc_cat=104&_nc_oc=Q6cZ2gERyzOsRWuQjxwnLeJZ7oLnG49Fcz1IA8-1c2iQij3uOu-feIaNd4eMLuuAl9lsUmZCYqjtpgkFDl9JUN5h5s7J&_nc_ohc=uJptRDn4X9QQ7kNvwEvlqxa&_nc_gid=zmIcji9zSuwt7IcYUljLcQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Af65sgXCvJgRz26wtEXmng7cIBDFwgSLhIoOiZkAbw564A&oe=69FA3D76&_nc_sid=8b3546"
-             alt="Dom Cortês" loading="lazy" onerror="this.parentElement.style.display='none'">
-        <div class="gal-overlay"><span class="gal-overlay-text">Corte</span></div>
-      </div>
-
-      <div class="gal-photo">
-        <img src="https://instagram.fopo5-2.fna.fbcdn.net/v/t51.71878-15/681631253_951325137888558_7008480584799999552_n.jpg?stp=dst-jpg_e15_tt6&_nc_ht=instagram.fopo5-2.fna.fbcdn.net&_nc_cat=106&_nc_oc=Q6cZ2gERyzOsRWuQjxwnLeJZ7oLnG49Fcz1IA8-1c2iQij3uOu-feIaNd4eMLuuAl9lsUmZCYqjtpgkFDl9JUN5h5s7J&_nc_ohc=Z2lxGSurXK0Q7kNvwGU2Ml0&_nc_gid=zmIcji9zSuwt7IcYUljLcQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Af4xOVTvPXrMgOxDCrdW0InteOLFvQrSo8CfLx3Or-2JWQ&oe=69FA3984&_nc_sid=8b3546"
-             alt="Dom Cortês" loading="lazy" onerror="this.parentElement.style.display='none'">
-        <div class="gal-overlay"><span class="gal-overlay-text">Trabalho</span></div>
-      </div>
-
-      <div class="gal-photo">
-        <img src="https://instagram.fopo5-1.fna.fbcdn.net/v/t51.71878-15/673742649_1352685380247976_2329739828962963577_n.jpg?stp=dst-jpg_e15_tt6&_nc_ht=instagram.fopo5-1.fna.fbcdn.net&_nc_cat=104&_nc_oc=Q6cZ2gERyzOsRWuQjxwnLeJZ7oLnG49Fcz1IA8-1c2iQij3uOu-feIaNd4eMLuuAl9lsUmZCYqjtpgkFDl9JUN5h5s7J&_nc_ohc=UzyRsJ4jZUkQ7kNvwGeJGWW&_nc_gid=zmIcji9zSuwt7IcYUljLcQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Af4C7B5Zy2SL6wrA4_oSTR8-l04pzNmAZsH1G9nxwbEejQ&oe=69FA17BB&_nc_sid=8b3546"
-             alt="Dom Cortês" loading="lazy" onerror="this.parentElement.style.display='none'">
-        <div class="gal-overlay"><span class="gal-overlay-text">Corte</span></div>
-      </div>
-
-      <div class="gal-photo">
-        <img src="https://instagram.fopo5-1.fna.fbcdn.net/v/t51.82787-15/671177236_17934161442235968_3531539884662532785_n.jpg?stp=dst-jpg_e15_tt6&_nc_ht=instagram.fopo5-1.fna.fbcdn.net&_nc_cat=100&_nc_oc=Q6cZ2gERyzOsRWuQjxwnLeJZ7oLnG49Fcz1IA8-1c2iQij3uOu-feIaNd4eMLuuAl9lsUmZCYqjtpgkFDl9JUN5h5s7J&_nc_ohc=6JkLqmSI34oQ7kNvwEko6yI&_nc_gid=zmIcji9zSuwt7IcYUljLcQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Af6n0j9lqwqZZ6iK0k8yJTKoSLslhZOa3wnVnOOi20EKCQ&oe=69FA11A4&_nc_sid=8b3546"
-             alt="Dom Cortês" loading="lazy" onerror="this.parentElement.style.display='none'">
-        <div class="gal-overlay"><span class="gal-overlay-text">Trabalho</span></div>
-      </div>
-
-      <div class="gal-photo">
-        <img src="https://instagram.fopo5-2.fna.fbcdn.net/v/t51.71878-15/659243692_1143213601227657_3147318906981522155_n.jpg?stp=dst-jpg_e15_tt6&_nc_ht=instagram.fopo5-2.fna.fbcdn.net&_nc_cat=109&_nc_oc=Q6cZ2gERyzOsRWuQjxwnLeJZ7oLnG49Fcz1IA8-1c2iQij3uOu-feIaNd4eMLuuAl9lsUmZCYqjtpgkFDl9JUN5h5s7J&_nc_ohc=mHMBSN3yhm4Q7kNvwEJs4_F&_nc_gid=zmIcji9zSuwt7IcYUljLcQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Af7X7q8lrn-Lp58J4qwuAZljZGgV1FvrxhprGrbDNE9Now&oe=69FA25C6&_nc_sid=8b3546"
-             alt="Dom Cortês" loading="lazy" onerror="this.parentElement.style.display='none'">
-        <div class="gal-overlay"><span class="gal-overlay-text">Corte</span></div>
-      </div>
-
-      <div class="gal-photo">
-        <img src="https://instagram.fopo5-1.fna.fbcdn.net/v/t51.71878-15/658481757_1504472764634074_3572231472014328696_n.jpg?stp=dst-jpg_e15_tt6&_nc_ht=instagram.fopo5-1.fna.fbcdn.net&_nc_cat=110&_nc_oc=Q6cZ2gERyzOsRWuQjxwnLeJZ7oLnG49Fcz1IA8-1c2iQij3uOu-feIaNd4eMLuuAl9lsUmZCYqjtpgkFDl9JUN5h5s7J&_nc_ohc=CNri3FWkr1YQ7kNvwGs9cZk&_nc_gid=zmIcji9zSuwt7IcYUljLcQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Af5X_GJiYE6dcUubwt2DvsHwCbqTy68XK8Y0m2Li2vtE0g&oe=69FA34F3&_nc_sid=8b3546"
-             alt="Dom Cortês" loading="lazy" onerror="this.parentElement.style.display='none'">
-        <div class="gal-overlay"><span class="gal-overlay-text">Barba</span></div>
-      </div>
-
-      <div class="gal-photo">
-        <img src="https://instagram.fopo5-2.fna.fbcdn.net/v/t51.71878-15/657252922_1124872819771506_884997159527850428_n.jpg?stp=dst-jpg_e15_tt6&_nc_ht=instagram.fopo5-2.fna.fbcdn.net&_nc_cat=106&_nc_oc=Q6cZ2gERyzOsRWuQjxwnLeJZ7oLnG49Fcz1IA8-1c2iQij3uOu-feIaNd4eMLuuAl9lsUmZCYqjtpgkFDl9JUN5h5s7J&_nc_ohc=uP38Cst7Z1MQ7kNvwHHeq-q&_nc_gid=zmIcji9zSuwt7IcYUljLcQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Af777dM315soLLULzletnHROW8VjMFFBcHTZF0KOPkztqw&oe=69FA08F6&_nc_sid=8b3546"
-             alt="Dom Cortês" loading="lazy" onerror="this.parentElement.style.display='none'">
-        <div class="gal-overlay"><span class="gal-overlay-text">Corte + Barba</span></div>
-      </div>
-
-      <div class="gal-photo">
-        <img src="https://instagram.fopo5-1.fna.fbcdn.net/v/t51.71878-15/657367927_1876393153014610_1624420482847265549_n.jpg?stp=dst-jpg_e15_tt6&_nc_ht=instagram.fopo5-1.fna.fbcdn.net&_nc_cat=110&_nc_oc=Q6cZ2gERyzOsRWuQjxwnLeJZ7oLnG49Fcz1IA8-1c2iQij3uOu-feIaNd4eMLuuAl9lsUmZCYqjtpgkFDl9JUN5h5s7J&_nc_ohc=qakM6sWPwd0Q7kNvwFxjdFf&_nc_gid=zmIcji9zSuwt7IcYUljLcQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Af5L3HvW5ASG_gC1Pnn_SOTZo1dp_yWfPHVv8DrLBTAvaQ&oe=69FA2A9F&_nc_sid=8b3546"
-             alt="Dom Cortês" loading="lazy" onerror="this.parentElement.style.display='none'">
-        <div class="gal-overlay"><span class="gal-overlay-text">Trabalho</span></div>
-      </div>
-
-      <div class="gal-photo">
-        <img src="https://instagram.fopo5-1.fna.fbcdn.net/v/t51.71878-15/657390856_925286263627152_2475119073064649184_n.jpg?stp=dst-jpg_e15_tt6&_nc_ht=instagram.fopo5-1.fna.fbcdn.net&_nc_cat=100&_nc_oc=Q6cZ2gERyzOsRWuQjxwnLeJZ7oLnG49Fcz1IA8-1c2iQij3uOu-feIaNd4eMLuuAl9lsUmZCYqjtpgkFDl9JUN5h5s7J&_nc_ohc=HJYaWVibXAoQ7kNvwF-7Tnu&_nc_gid=zmIcji9zSuwt7IcYUljLcQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Af47QZJTU-BEfOOqwgHQQD-ec-c-YMoQXuBViu5qPCfXoA&oe=69FA35DE&_nc_sid=8b3546"
-             alt="Dom Cortês" loading="lazy" onerror="this.parentElement.style.display='none'">
-        <div class="gal-overlay"><span class="gal-overlay-text">Corte</span></div>
-      </div>
-
-      <div class="gal-photo">
-        <img src="https://instagram.fopo5-1.fna.fbcdn.net/v/t51.71878-15/657382893_1646844253301350_3969923192303310168_n.jpg?stp=dst-jpg_e15_tt6&_nc_ht=instagram.fopo5-1.fna.fbcdn.net&_nc_cat=110&_nc_oc=Q6cZ2gERyzOsRWuQjxwnLeJZ7oLnG49Fcz1IA8-1c2iQij3uOu-feIaNd4eMLuuAl9lsUmZCYqjtpgkFDl9JUN5h5s7J&_nc_ohc=6DL8r_3FVj0Q7kNvwGOOp7j&_nc_gid=zmIcji9zSuwt7IcYUljLcQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Af7nHjhrkNFdin_PEqhI6KUkBtkdDQ2gx3uJ4g66UFAoXQ&oe=69FA34B1&_nc_sid=8b3546"
-             alt="Dom Cortês" loading="lazy" onerror="this.parentElement.style.display='none'">
-        <div class="gal-overlay"><span class="gal-overlay-text">Dom Cortês</span></div>
-      </div>
-
-    </div><!-- /masonry -->
-
-    <div class="gal-cta r">
-      <a href="https://www.instagram.com/domcortesoficial/" target="_blank">Ver todos os trabalhos no Instagram @domcortesoficial &nbsp;→</a>
-    </div>
-  </div>
-</section>
-
-
-<!-- ══ COMO MARCAR ════════════════════════════════════════ -->
-<section id="marcar">
-  <div class="container">
-    <div class="marcar-grid">
-      <div>
-        <span class="label r">Marcação</span>
-        <div class="gold-line r r1"></div>
-        <h2 style="font-size:clamp(1.8rem,3vw,2.5rem);color:var(--cream);margin-bottom:2rem" class="r r1">Como marcar<br><em>a tua visita</em></h2>
-        <div class="steps">
-          <div class="step r r1"><div class="step-n">01</div><div><h3>Clica em "Marcar pelo WhatsApp"</h3><p>Abre diretamente uma conversa com a Dom Cortês.</p></div></div>
-          <div class="step r r2"><div class="step-n">02</div><div><h3>Indica o serviço pretendido</h3><p>Corte, barba, prótese capilar ou combinação.</p></div></div>
-          <div class="step r r3"><div class="step-n">03</div><div><h3>Escolhe o dia e horário ideal</h3><p>Sugere a data e confirmamos disponibilidade rapidamente.</p></div></div>
-          <div class="step r r4"><div class="step-n">04</div><div><h3>Confirma a tua marcação</h3><p>Recebe a confirmação e aparece na hora combinada.</p></div></div>
-        </div>
-      </div>
-      <div class="marcar-box r r2">
-        <span class="label" style="margin-bottom:1.5rem">WhatsApp</span>
-        <h3>Fala connosco agora</h3>
-        <p>A forma mais rápida de garantir o teu horário na Dom Cortês. Respondemos sempre com brevidade.</p>
-        <span class="wa-num">+351 916 741 779</span>
-        <a href="https://wa.me/351916741779?text=Ol%C3%A1%2C%20Dom%20Cort%C3%AAs%21%20Gostaria%20de%20marcar%20um%20hor%C3%A1rio." target="_blank" class="btn btn-gold" style="width:100%;justify-content:center;">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-          Marcar pelo WhatsApp
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ══ LOCALIZAÇÃO ════════════════════════════════════════ -->
-<section id="localizacao">
-  <div class="container">
-    <div class="loc-grid">
-      <div class="loc-info">
-        <span class="label r">Onde estamos</span>
-        <div class="gold-line r r1"></div>
-        <h2 class="r r1">Encontra-nos<br>no Porto</h2>
-        <div class="loc-items r r2">
-          <div class="loc-item"><div class="loc-ic">📍</div><div class="loc-d"><strong>Endereço</strong><a href="https://maps.google.com/?q=R.+de+Jo%C3%A3o+Pedro+Ribeiro+806,+4000-302+Porto" target="_blank">R. de João Pedro Ribeiro 806<br>4000-302 Porto, Portugal</a></div></div>
-          <div class="loc-item"><div class="loc-ic">📱</div><div class="loc-d"><strong>WhatsApp (marcações)</strong><a href="https://wa.me/351916741779" target="_blank">+351 916 741 779</a></div></div>
-          <div class="loc-item"><div class="loc-ic">📞</div><div class="loc-d"><strong>Telefone</strong><a href="tel:+351932667611">+351 932 667 611</a></div></div>
-          <div class="loc-item"><div class="loc-ic">✉</div><div class="loc-d"><strong>Email</strong><a href="mailto:barbeariadomcortes@gmail.com">barbeariadomcortes@gmail.com</a></div></div>
-        </div>
-        <div class="loc-btns r r3">
-          <a href="https://maps.google.com/?q=R.+de+Jo%C3%A3o+Pedro+Ribeiro+806,+4000-302+Porto" target="_blank" class="btn btn-outline">Ver no mapa</a>
-          <a href="https://wa.me/351916741779?text=Ol%C3%A1%2C%20Dom%20Cort%C3%AAs%21%20Gostaria%20de%20marcar%20um%20hor%C3%A1rio." target="_blank" class="btn btn-gold">Marcar pelo WhatsApp</a>
-        </div>
-      </div>
-      <div class="r r2">
-        <div class="loc-map">
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3004.5!2d-8.6185!3d41.1578!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd246f3827a3b2cb%3A0x0!2sR.+de+Jo%C3%A3o+Pedro+Ribeiro+806%2C+4000-302+Porto!5e0!3m2!1spt!2spt!4v1" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-          <div class="map-ph" id="mapPh">
-            <div class="map-ph-pin">📍</div>
-            <div class="map-ph-txt">R. de João Pedro Ribeiro 806<br>Porto, Portugal</div>
-            <a href="https://maps.google.com/?q=R.+de+Jo%C3%A3o+Pedro+Ribeiro+806,+4000-302+Porto" target="_blank" class="btn btn-gold" style="font-size:0.65rem;padding:0.65rem 1.2rem;margin-top:0.5rem">Abrir no Google Maps</a>
+        <div>
+          <span class="label anime-fade">A nossa história</span>
+          <h2 style="font-size: 3.5rem; margin-bottom: 2rem;">
+            <span class="word-reveal"><span>Cuidado</span></span>
+            <span class="word-reveal"><span>levado</span></span>
+            <span class="word-reveal"><span>ao</span></span>
+            <span class="word-reveal"><span><em>Detalhe.</em></span></span>
+          </h2>
+          <p class="anime-fade" style="font-size: 1.1rem; color: var(--muted); margin-bottom: 1.5rem;">Na Dom Cortês, cada serviço é executado com precisão num ambiente focado na estética masculina clássica.</p>
+          <p class="anime-fade" style="font-size: 1.1rem; color: var(--muted);">Localizada na Rua João Pedro Ribeiro, no Porto, oferecemos um espaço acolhedor onde técnica e sofisticação se encontram.</p>
+          <div class="sobre-stats">
+            <div class="stat-item anime-stat"><strong><span class="counter" data-target="06">00</span></strong><span>Anos de Experiência</span></div>
+            <div class="stat-item anime-stat"><strong><span class="counter" data-target="15">00</span>K</strong><span>Cortes Realizados</span></div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-
-<!-- ══ CONFIANÇA ══════════════════════════════════════════ -->
-<section id="confianca">
-  <div class="container">
-    <div style="text-align:center;margin-bottom:1rem">
-      <span class="label r">A nossa identidade</span>
-      <h2 style="font-size:clamp(1.8rem,3vw,2.7rem);color:var(--cream);margin-top:.8rem" class="r r1">Porque somos a escolha<br><em>de quem exige qualidade</em></h2>
-      <div class="gold-line c r r2"></div>
-    </div>
-    <div class="pil-grid">
-      <div class="pil r"><span class="pil-ic">🏆</span><div class="pil-t">Desde 2018</div><div class="pil-d">Seis anos a servir o Porto com profissionalismo e dedicação.</div></div>
-      <div class="pil r r1"><span class="pil-ic">✂</span><div class="pil-t">Profissionais Qualificados</div><div class="pil-d">Equipa especializada em corte masculino, barba e prótese capilar.</div></div>
-      <div class="pil r r2"><span class="pil-ic">◈</span><div class="pil-t">Ambiente Clássico</div><div class="pil-d">Espaço cuidado, acolhedor e pensado para o conforto do cliente.</div></div>
-      <div class="pil r r3"><span class="pil-ic">♦</span><div class="pil-t">Atenção ao Detalhe</div><div class="pil-d">O detalhe é o que distingue um bom corte de um corte memorável.</div></div>
-      <div class="pil r r4"><span class="pil-ic">✦</span><div class="pil-t">Autoestima em Foco</div><div class="pil-d">Elevar a confiança e a presença de cada homem que nos visita.</div></div>
-    </div>
-    <div class="since-box r">
-      <span class="since-yr">2018</span>
-      <div class="since-txt">Barbearia Dom Cortês · Porto · Desde 2018</div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ══ CTA FINAL ══════════════════════════════════════════ -->
-<section id="cta-final">
-  <div class="container">
-    <div class="cta-c">
-      <span class="cta-orn r">✦ &nbsp; ✦ &nbsp; ✦</span>
-      <h2 class="r r1">Pronto para renovar<br><em>o teu visual?</em></h2>
-      <p class="r r2">Marca o teu horário na Dom Cortês e vive uma experiência de cuidado masculino com detalhe, técnica e confiança. Estamos à tua espera.</p>
-      <div class="cta-btns r r3">
-        <a href="https://wa.me/351916741779?text=Ol%C3%A1%2C%20Dom%20Cort%C3%AAs%21%20Gostaria%20de%20marcar%20um%20hor%C3%A1rio." target="_blank" class="btn btn-gold">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-          Marcar pelo WhatsApp
-        </a>
-        <a href="https://www.instagram.com/domcortesoficial/" target="_blank" class="btn btn-outline">Ver no Instagram</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ══ FOOTER ═════════════════════════════════════════════ -->
-<footer>
-  <div class="container">
-    <div class="ft">
-      <div class="ft-brand">
-        <a href="#" class="logo">Dom Cortês <small>Barbearia · Porto</small></a>
-        <p>Barbearia clássica no Porto desde 2018. Especializados em corte masculino, barba e prótese capilar.</p>
-        <div class="ft-social">
-          <a href="https://www.instagram.com/domcortesoficial/" target="_blank" class="ft-soc" title="Instagram">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-          </a>
-          <a href="https://www.facebook.com/domcortesoficial/" target="_blank" class="ft-soc" title="Facebook">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-          </a>
-          <a href="https://wa.me/351916741779" target="_blank" class="ft-soc" title="WhatsApp">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-          </a>
+  <section id="servicos" class="anime-section">
+    <div class="container">
+      <div class="label center anime-fade" style="margin-bottom: 4rem;">A Nossa Especialidade</div>
+      <div class="services-grid">
+        <div class="service-card anime-card">
+          <span class="service-icon">✂️</span>
+          <h3>Corte Premium</h3>
+          <p>Adaptação perfeita ao formato do rosto. Do fade técnico ao corte clássico de tesoura.</p>
+        </div>
+        <div class="service-card anime-card">
+          <span class="service-icon">🪒</span>
+          <h3>Barboterapia</h3>
+          <p>Ritual de toalha quente, óleos essenciais e acabamento milimétrico à navalha.</p>
+        </div>
+        <div class="service-card anime-card">
+          <span class="service-icon">💎</span>
+          <h3>Prótese Capilar</h3>
+          <p>Sistemas indetetáveis e de alta qualidade para recuperação total de densidade.</p>
         </div>
       </div>
-      <div class="ft-col">
-        <h4>Serviços</h4>
-        <ul>
-          <li><a href="#servicos">Corte Masculino</a></li>
-          <li><a href="#servicos">Barba</a></li>
-          <li><a href="#servicos">Corte + Barba</a></li>
-          <li><a href="#servicos">Sobrancelha</a></li>
-          <li><a href="#protese">Prótese Capilar</a></li>
-        </ul>
-      </div>
-      <div class="ft-col">
-        <h4>Contactos</h4>
-        <ul>
-          <li><a href="https://wa.me/351916741779" target="_blank">WhatsApp: +351 916 741 779</a></li>
-          <li><a href="tel:+351932667611">Tel: +351 932 667 611</a></li>
-          <li><a href="mailto:barbeariadomcortes@gmail.com">barbeariadomcortes@gmail.com</a></li>
-          <li><span>R. João Pedro Ribeiro 806<br>4000-302 Porto</span></li>
-        </ul>
+    </div>
+  </section>
+
+  <section id="protese" class="anime-section">
+    <div class="container">
+      <div class="grid-2">
+        <div>
+          <span class="label anime-fade">Soluções Avançadas</span>
+          <h2 style="font-size: 3.2rem; margin-bottom: 1.5rem;">
+            <span class="word-reveal"><span>Especialistas</span></span>
+            <span class="word-reveal"><span>em</span></span><br>
+            <span class="word-reveal"><span><em>Prótese</em></span></span>
+            <span class="word-reveal"><span><em>Capilar.</em></span></span>
+          </h2>
+          <p class="anime-fade" style="font-size: 1.1rem; color: var(--muted); margin-bottom: 2rem;">Somos a referência no Porto. O nosso processo garante discrição absoluta, conforto e um visual 100% natural.</p>
+          <ul class="protese-list anime-fade">
+            <li>Acabamento frontal impercetível</li>
+            <li>Cabelo natural de alta qualidade</li>
+            <li>Manutenção especializada no estúdio</li>
+          </ul>
+          <div class="anime-fade" style="margin-top: 3rem;">
+            <a href="https://wa.me/351916741779" target="_blank" class="btn btn-gold">Agendar Avaliação</a>
+          </div>
+        </div>
+        <div class="img-wrap anime-img-container" style="aspect-ratio: 4/5;">
+          <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&w=800&q=90" alt="Prótese Capilar Dom Cortês" class="anime-img">
+        </div>
       </div>
     </div>
-    <div class="ft-btm">© 2025 Barbearia Dom Cortês · Porto · Todos os direitos reservados</div>
-  </div>
-</footer>
+  </section>
 
-<!-- ══ FLOATING WA ════════════════════════════════════════ -->
-<a href="https://wa.me/351916741779?text=Ol%C3%A1%2C%20Dom%20Cort%C3%AAs%21%20Gostaria%20de%20marcar%20um%20hor%C3%A1rio." target="_blank" class="wa-fab" title="Marcar pelo WhatsApp">
-  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-</a>
+  <section id="galeria" class="anime-section">
+    <div class="container">
+      <div class="label center anime-fade" style="margin-bottom: 4rem;">Galeria de Trabalhos</div>
+      <div class="gallery-grid">
+        <div class="gal-item anime-card img-wrap">
+          <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=600&q=90" alt="Corte">
+          <div class="gal-overlay"><span>Corte Profissional</span></div>
+        </div>
+        <div class="gal-item anime-card img-wrap">
+          <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=600&q=90" alt="Detalhe">
+          <div class="gal-overlay"><span>Detalhes Clássicos</span></div>
+        </div>
+        <div class="gal-item anime-card img-wrap">
+          <img src="https://images.unsplash.com/photo-1512496015851-a1fa41ac1b70?auto=format&fit=crop&w=600&q=90" alt="Fade">
+          <div class="gal-overlay"><span>Fade Impecável</span></div>
+        </div>
+        <div class="gal-item anime-card img-wrap">
+          <img src="https://images.unsplash.com/photo-1534723452862-4c874018d66d?auto=format&fit=crop&w=600&q=90" alt="Barba">
+          <div class="gal-overlay"><span>Barboterapia</span></div>
+        </div>
+      </div>
+      <div class="anime-fade" style="text-align: center; margin-top: 3rem;">
+        <a href="https://www.instagram.com/domcortesoficial/" target="_blank" class="btn btn-outline">Ver Instagram</a>
+      </div>
+    </div>
+  </section>
 
-<!-- ══ JAVASCRIPT ══════════════════════════════════════════ -->
-<script>
-  /* ── NAV scroll ── */
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => { nav.classList.toggle('up', scrollY > 60); }, { passive: true });
+  <footer id="contacto" class="anime-section">
+    <div class="container">
+      <div class="grid-2" style="margin-bottom: 5rem;">
+        <div>
+          <span class="label anime-fade">Localização</span>
+          <h2 style="font-size: 3rem; margin-bottom: 2rem;">
+            <span class="word-reveal"><span>Visite</span></span>
+            <span class="word-reveal"><span>o</span></span>
+            <span class="word-reveal"><span>nosso</span></span>
+            <span class="word-reveal"><span>espaço.</span></span>
+          </h2>
+          <p class="anime-fade" style="color: var(--muted); margin-bottom: 1rem;">Rua João Pedro Ribeiro 806<br>4000-302 Porto, Portugal</p>
+          <p class="anime-fade" style="color: var(--muted); margin-bottom: 2rem;">Segunda a Sábado<br>09:00 — 20:00</p>
+          <a href="https://wa.me/351916741779" target="_blank" class="btn btn-gold anime-fade">WhatsApp: +351 916 741 779</a>
+        </div>
+        <div class="anime-fade">
+          <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3004.5!2d-8.6185!3d41.1578!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd246f3827a3b2cb%3A0x0!2sR.+de+Jo%C3%A3o+Pedro+Ribeiro+806%2C+4000-302+Porto!5e0!3m2!1spt!2spt!4v1" allowfullscreen="" loading="lazy"></iframe>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-grid anime-fade">
+        <div class="footer-col">
+          <div class="logo-main">DOM CORTÊS</div>
+          <p style="color: var(--muted); font-size: 0.8rem; margin-top: 1rem;">Excelência e tradição no cuidado masculino.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <ul class="footer-links">
+            <li><a href="#sobre">A Barbearia</a></li>
+            <li><a href="#servicos">Serviços</a></li>
+            <li><a href="#protese">Prótese Capilar</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Redes</h4>
+          <ul class="footer-links">
+            <li><a href="https://www.instagram.com/domcortesoficial/" target="_blank">Instagram</a></li>
+            <li><a href="https://www.facebook.com/domcortesoficial/" target="_blank">Facebook</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="copyright anime-fade">© 2026 Barbearia Dom Cortês. Todos os direitos reservados.</div>
+    </div>
+  </footer>
 
-  /* ── Mobile menu ── */
-  function toggleMob() {
-    const m = document.getElementById('mobNav');
-    m.classList.toggle('open');
-    document.body.style.overflow = m.classList.contains('open') ? 'hidden' : '';
-  }
-
-  /* ─────────────────────────────────────────────────────
-     APPLE-STYLE VIDEO SCROLL — smooth lerp scrubbing
-     Uses requestAnimationFrame + linear interpolation
-     so the video glides naturally instead of jumping.
-  ───────────────────────────────────────────────────── */
-  const videoWrapper = document.getElementById('video-wrapper');
-  const video        = document.getElementById('hero-video');
-  const progressBar  = document.getElementById('vid-progress-bar');
-  const notice       = document.getElementById('vid-notice');
-  const fallback     = document.getElementById('vidFallback');
-
-  let videoReady  = false;
-  let targetTime  = 0;   // where scroll wants the video to be
-  let displayTime = 0;   // smoothed value we actually apply
-  let rafId       = null;
-
-  function lerp(a, b, t) { return a + (b - a) * t; }
-
-  video.addEventListener('loadedmetadata', () => {
-    videoReady = true;
-    video.pause();
-    video.currentTime = 0;
-    fallback.style.transition = 'opacity 0.6s';
-    fallback.style.opacity = '0';
-    notice.classList.remove('show');
-    rafLoop(); // start smooth loop
-  });
-
-  video.addEventListener('error', () => {
-    notice.classList.add('show');
-    video.style.display = 'none';
-  });
-
-  /* Smooth RAF loop — lerps displayTime → targetTime */
-  function rafLoop() {
-    if (!videoReady) return;
-    const diff = targetTime - displayTime;
-    if (Math.abs(diff) > 0.008) {
-      displayTime += diff * 0.14;   // 0.14 = smoothing (lower = more lag, higher = snappier)
-      video.currentTime = displayTime;
-    }
-    rafId = requestAnimationFrame(rafLoop);
-  }
-
-  /* On scroll — only update targetTime, RAF does the rest */
-  window.addEventListener('scroll', () => {
-    if (!videoReady || !video.duration) return;
-    const wrapTop    = videoWrapper.offsetTop;
-    const wrapHeight = videoWrapper.offsetHeight - window.innerHeight;
-    const progress   = Math.max(0, Math.min(1, (scrollY - wrapTop) / wrapHeight));
-    targetTime = video.duration * progress;
-    progressBar.style.width = (progress * 100) + '%';
-  }, { passive: true });
-
-  /* ── Smooth anchor scroll ── */
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const t = document.querySelector(a.getAttribute('href'));
-      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  <script>
+    // Inicializar opacidade para elementos animados
+    document.querySelectorAll('.anime-fade, .anime-card, .anime-stat').forEach(el => el.style.opacity = 0);
+    document.querySelectorAll('.anime-img').forEach(el => {
+      el.style.opacity = 0;
+      el.style.transform = 'scale(1.25)'; // Scale inicial para o efeito parallax
     });
-  });
 
-  /* ── Reveal on scroll ── */
-  const ro = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('v'); });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    // Nav Background on Scroll
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+    });
 
-  document.querySelectorAll('.r').forEach(el => ro.observe(el));
-</script>
+    // Intersection Observer Master
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const target = entry.target;
 
+          // 1. Animar Títulos Especiais (Word Reveal Effect)
+          const words = target.querySelectorAll('.word-reveal span');
+          if (words.length > 0) {
+            anime({
+              targets: words,
+              translateY: ['110%', '0%'],
+              duration: 800,
+              delay: anime.stagger(100),
+              easing: 'easeOutQuint'
+            });
+          }
+
+          // 2. Animar Textos Normais e Botões (Fade Up)
+          const fadeEls = target.querySelectorAll('.anime-fade');
+          if (fadeEls.length > 0) {
+            anime({
+              targets: fadeEls,
+              translateY: [30, 0],
+              opacity: [0, 1],
+              duration: 1000,
+              delay: anime.stagger(150, {start: 300}), // Começa um pouco depois dos títulos
+              easing: 'easeOutQuad'
+            });
+          }
+
+          // 3. Animar Cards e Elementos de Grelha (Elástico)
+          const cards = target.querySelectorAll('.anime-card');
+          if (cards.length > 0) {
+            anime({
+              targets: cards,
+              translateY: [40, 0],
+              opacity: [0, 1],
+              duration: 1200,
+              delay: anime.stagger(150, {start: 200}),
+              easing: 'easeOutElastic(1, 1)' // Dá um ligeiro ressalto premium
+            });
+          }
+
+          // 4. Animar Imagens (Zoom Out Panorâmico)
+          const imgs = target.querySelectorAll('.anime-img');
+          if (imgs.length > 0) {
+            anime({
+              targets: imgs,
+              scale: [1.25, 1],
+              opacity: [0, 1],
+              duration: 2000,
+              easing: 'easeOutQuart'
+            });
+          }
+
+          // 5. Animar Contadores Numéricos
+          const stats = target.querySelectorAll('.anime-stat');
+          if (stats.length > 0) {
+            anime({
+              targets: stats,
+              translateY: [20, 0],
+              opacity: [0, 1],
+              duration: 800,
+              delay: anime.stagger(100, {start: 400}),
+              easing: 'easeOutSine'
+            });
+
+            // Animação dos números em si
+            const counters = target.querySelectorAll('.counter');
+            counters.forEach(counter => {
+              const obj = { val: 0 };
+              const targetVal = parseInt(counter.getAttribute('data-target'));
+              anime({
+                targets: obj,
+                val: targetVal,
+                duration: 1500,
+                delay: 600,
+                easing: 'easeOutExpo',
+                update: function() {
+                  // Adiciona um '0' à esquerda se for menor que 10 para estilo
+                  counter.innerHTML = obj.val < 10 ? '0' + Math.round(obj.val) : Math.round(obj.val);
+                }
+              });
+            });
+          }
+
+          // Parar de observar
+          observer.unobserve(target);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    // Observar as secções
+    document.querySelectorAll('.anime-section').forEach(sec => observer.observe(sec));
+
+    // Animating Hero specifically on load
+    document.addEventListener("DOMContentLoaded", () => {
+      const hero = document.getElementById('hero');
+      if (hero) observer.observe(hero);
+    });
+  </script>
 </body>
 </html>
